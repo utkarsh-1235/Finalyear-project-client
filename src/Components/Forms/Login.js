@@ -41,11 +41,14 @@ const Login = () => {
           username,
           password,
         });
+        console.log(response.data);
         await setUser({ ...response.data, userType });
         localStorage.setItem(
           "userDetails",
           JSON.stringify({ ...response.data, userType })
+          
         );
+        setButtonText("Login");
       } catch (err) {
         setError(err);
         setButtonText("Login");
