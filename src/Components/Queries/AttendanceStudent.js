@@ -17,7 +17,7 @@ const AttendanceStudent = () => {
     setError("");
     try {
       const response = await axios.get(
-        `/attendance/student/${user._id}/${date}`
+        `/attandance/student/${user.teacher._id}/${date}`
       );
       setAttendance(response.data);
     } catch (err) {
@@ -66,6 +66,7 @@ const AttendanceStudent = () => {
                 <TableHeader Headers={["Hour", "Paper", "Present"]} />
                 <tbody>
                   {attendance?.map((period, index) => (
+                    
                     <tr
                       key={index}
                       className={
@@ -74,6 +75,7 @@ const AttendanceStudent = () => {
                           : "border-t-[1px] border-slate-400"
                       }
                     >
+                      
                       <td className="p-2">{period.hour}</td>
                       <td className="whitespace-break-spaces p-2">
                         {period.paper.paper}

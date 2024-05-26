@@ -13,8 +13,10 @@ const TeacherForm = () => {
     qualification: "",
     department: "",
     role: "",
-    username: "",
+    college_id: "",
     password: "",
+    address: "",
+    phoneNumber: ""
   });
   const [error, setError] = useState("");
 
@@ -30,9 +32,25 @@ const TeacherForm = () => {
     e.preventDefault();
     try {
       const reqData = JSON.stringify(teacher);
+      // console.log(reqData);
       const response = await axios.post("/teacher/create", reqData);
-      navigate("../");
-      toast.success(response.data.message);
+      console.log(response.status);
+      
+        navigate("/dash");
+        toast.success(response.data.message);
+        
+      
+      setTeacher({
+        name: "",
+        email: "",
+        qualification: "",
+        department: "",
+        role: "",
+        college_id: "",
+        password: "",
+        address: "",
+        phoneNumber: ""
+      })
     } catch (err) {
       setError(err);
     }
@@ -64,6 +82,40 @@ const TeacherForm = () => {
         value={teacher.email}
         onChange={(e) => handleFormChange(e)}
       />
+      <label className="block" htmlFor="role">
+        Role:
+      </label>
+      <select
+        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-[1.5px] focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+        placeholder="select role"
+        name="role"
+        id="role"
+        value={teacher.role}
+        required
+        onChange={(e) => handleFormChange(e)}
+      >
+         <option defaultValue hidden>
+          Select 
+        </option>
+        <option 
+        className="min-h-[2rem] bg-violet-500 font-semibold leading-8 text-slate-100"
+          value="HOD">
+           HOD
+        </option>
+
+        <option
+          className="min-h-[2rem] bg-violet-500 font-semibold leading-8 text-slate-100"
+          value="Teacher"
+        >
+          Teacher
+        </option>
+        <option
+          className="min-h-[2rem] bg-violet-500 font-semibold leading-8 text-slate-100"
+          value="Cordinator"
+        >
+          Coordinator
+        </option>
+      </select>
       <label className="block" htmlFor="qualification">
         Qualification:
       </label>
@@ -99,16 +151,16 @@ const TeacherForm = () => {
           Computer
         </option>
       </select>
-      <label className="block" htmlFor="username">
-        Username:
+      <label className="block" htmlFor="college_id">
+        College Id:
       </label>
       <input
         className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400 "
-        name="username"
+        name="college_id"
         type="text"
         required
-        id="username"
-        value={teacher.username}
+        id="college_id"
+        value={teacher.college_id}
         onChange={(e) => handleFormChange(e)}
       />
       <label className="block" htmlFor="password">
@@ -120,6 +172,29 @@ const TeacherForm = () => {
         name="password"
         id="password"
         value={teacher.password}
+        required
+        onChange={(e) => handleFormChange(e)}
+      />
+      <label className="block" htmlFor="phoneNumber">
+        Phone Number:
+      </label>
+      <input
+        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400 "
+        type="text"
+        name="phoneNumber"
+        id="phoneNumber"
+        value={teacher.phoneNumber}
+        required
+        onChange={(e) => handleFormChange(e)}
+      />
+      <label className="block" htmlFor="address">
+        Address:
+      </label>
+      <textarea
+        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400 "
+        name="address"
+        id="address"
+        value={teacher.address}
         required
         onChange={(e) => handleFormChange(e)}
       />

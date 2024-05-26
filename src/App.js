@@ -33,62 +33,97 @@ import StudentForm from "./Components/Forms/StudentForm";
 import NotesForm from "./Components/Forms/NotesForm";
 import TimeScheduleForm from "./Components/Forms/TimeScheduleForm";
 import Login from "./Components/Forms/Login";
-
+import AssigningSubject from "./Components/Forms/AssigningSubject";
+import Attendance from "./Components/Queries/Attendance";
+import GetAttendanceStudent from "./Components/Queries/GetAttandanceStudent";
+import AttendanceStudent from "./Components/Queries/AttendanceStudent";
+//import PaperForm from "./Components/Forms/PaperForm"
 // lazy loading user specific components
 const TeacherApproval = lazy(() =>
   import("./Components/Queries/TeacherApproval")
 );
-const PaperForm = lazy(() => import("./Components/Forms/PaperForm"));
-const JoinPaper = lazy(() => import("./Components/Forms/JoinPaper"));
+ const PaperForm = lazy(() => import("./Components/Forms/PaperForm"));
+const Getsubject = lazy(() => import("./Components/Forms/Getsubject"));
+
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
+      
       <Route path="/" element={<AppLayout />} errorElement={<ErrorElement />}>
-        <Route index element={<Login />} />
+        <Route index element={<Login />} /> 
         <Route path="/register" element={<RegisterLayout />}>
           <Route path="reg_teacher" element={<TeacherForm />} />
-          <Route path="reg_student" element={<StudentForm />} />
+          
+          {/* <Route path="reg_student" element={<StudentForm />} /> */}
         </Route>
+        
         <Route
           path="/dash"
           element={<Layout />}
           errorElement={<ErrorElement />}
         >
           <Route index element={<Dash />} />
-          <Route path="paper" element={<Paper />} />
-          <Route path="paper/:paper" element={<Notes />} />
-          <Route path="paper/:paper/add" element={<NotesForm />} />
-          <Route path="paper/:paper/:note/edit" element={<NotesForm />} />
+          <Route path="student" element={<StudentForm />} />
           <Route path="paper/:paper/students" element={<StudentsList />} />
-          <Route path="attendance" element={<AttendanceLayout />} />
+          <Route path="addAttendance" element={<GetAttendanceStudent/>} />
+          <Route path="getIndAttandance" element={<AttendanceStudent/>} />
+          <Route path="getAttandance" element={<Attendance/>} />
+          
           <Route path="internal" element={<InternalLayout />} />
           <Route path="time_schedule" element={<TimeScheduleForm />} />
           <Route path="profile" element={<Profile />} />
-          <Route
+          
+          <Route path="approveteacher" 
+            element={
+            <Suspense fallback={<Loading/>}>
+              <TeacherApproval/>
+              </Suspense>}>
+              </Route>
+
+              <Route
+            path="assign"
+            element={
+              <Suspense fallback={<Loading />}>
+                <AssigningSubject/>
+              </Suspense>
+            }/>
+ 
+       <Route path="addsubjects" element={<Suspense fallback={<Loading/>}>
+              <PaperForm/>
+              </Suspense>}/>
+              
+         
+
+              
+
+              
+          {/* <Route
             path="approve_teacher"
             element={
               <Suspense fallback={<Loading />}>
                 <TeacherApproval />
               </Suspense>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="add_paper"
             element={
               <Suspense fallback={<Loading />}>
                 <PaperForm />
               </Suspense>
             }
-          />
+          /> */}
           <Route
-            path="join_paper"
+            path="getsubjects"
             element={
               <Suspense fallback={<Loading />}>
-                <JoinPaper />
+                <Getsubject />
               </Suspense>
             }
+            
           />
+          
         </Route>
       </Route>
     )

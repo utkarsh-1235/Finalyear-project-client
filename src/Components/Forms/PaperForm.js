@@ -9,9 +9,11 @@ import ErrorStrip from "../ErrorStrip";
 const PaperForm = () => {
   const { user } = useContext(UserContext);
   const [newPaper, setNewPaper] = useState({
-    department: user.department,
-    paper: "",
-    year: "2023",
+    department: user?.teacher?.department || "",
+    subject: "",
+    universityCode: "",
+    nbaCode: "",
+    year: "",
     students: [],
     semester: "Select Semester",
     teacher: "",
@@ -23,7 +25,8 @@ const PaperForm = () => {
   // Fetch teachers
   useEffect(() => {
     const getTeachers = async () => {
-      const list = await axios.get("/teacher/list/" + user.department);
+      const list = await axios.get("/teacher/list/" + user?.teacher?.department);
+      console.log(list);
       setTeachers(list.data);
     };
     getTeachers();
@@ -49,10 +52,10 @@ const PaperForm = () => {
 
   return (
     <>
-      {user.role === "HOD" ? (
+      {user.userType === "HOD" ? (
         <main className="paper">
           <h2 className="mb-2 mt-3 whitespace-break-spaces text-4xl font-bold text-violet-950 underline decoration-inherit decoration-2 underline-offset-4 dark:mt-0 dark:text-slate-400 md:text-6xl">
-            Add Paper
+            Add Subject
           </h2>
           <form className="w-full md:w-1/3">
             <label htmlFor="department">Department:</label>
@@ -65,13 +68,33 @@ const PaperForm = () => {
               value={newPaper.department}
               disabled
             />
-            <label htmlFor="paper">Paper:</label>
+            <label htmlFor="subject">Subject:</label>
             <input
               className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
               type="text"
-              name="paper"
-              id="paper"
-              value={newPaper.paper}
+              name="subject"
+              id="subject"
+              value={newPaper.subject}
+              required
+              onChange={(e) => handleFormChange(e)}
+            />
+            <label htmlFor="universityCode">University Code:</label>
+            <input
+              className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+              type="text"
+              name="universityCode"
+              id="universityCode"
+              value={newPaper.universityCode}
+              required
+              onChange={(e) => handleFormChange(e)}
+            />
+            <label htmlFor="nbaCode">NBA_Code:</label>
+            <input
+              className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+              type="text"
+              name="nbaCode"
+              id="nbaCode"
+              value={newPaper.nbaCode}
               required
               onChange={(e) => handleFormChange(e)}
             />
@@ -96,9 +119,7 @@ const PaperForm = () => {
             <label htmlFor="year">Year:</label>
             <input
               className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
-              type="number"
-              min="2000"
-              max="2030"
+              type="text"
               step="1"
               required
               id="year"

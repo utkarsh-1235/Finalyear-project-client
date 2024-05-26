@@ -1,0 +1,21 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  
+  .input-box-custom {
+    border: none;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  

@@ -8,9 +8,10 @@ const Profile = () => {
   const { user } = React.useContext(UserContext);
   const [profile, setProfile] = React.useState({});
 
+  console.log(user.teacher._id);
   React.useEffect(() => {
     const getProfile = async () => {
-      const response = await axios.get(`${user.userType}/${user._id}`);
+      const response = await axios.get(`teacher/${user.teacher._id}`);
       setProfile(response.data);
     };
     getProfile();

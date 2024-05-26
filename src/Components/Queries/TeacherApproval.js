@@ -15,7 +15,7 @@ const TeacherApproval = () => {
   useEffect(() => {
     const getNewTeachers = async () => {
       try {
-        const response = await axios.get("teacher/approve/" + user.department);
+        const response = await axios.get("teacher/approve/" + user.teacher.department);
         setNewTeachers(response.data);
       } catch (err) {
         setError(err);
@@ -27,7 +27,7 @@ const TeacherApproval = () => {
   const handleApprove = async (e) => {
     const index = e.currentTarget.id;
     const teacher = newTeachers[index];
-    teacher.role = "teacher";
+    teacher.role = "Teacher";
     try {
       const response = await axios.patch("/teacher/" + teacher._id, {
         id: teacher._id,
@@ -56,13 +56,13 @@ const TeacherApproval = () => {
 
   return (
     <>
-      {user.role === "HOD" ? (
+      {user.userType === "HOD" ? (
         <main className="teacher__approval">
           <h2 className="mb-2 mt-3 whitespace-break-spaces text-4xl font-bold text-violet-950 underline decoration-inherit decoration-2 underline-offset-4 dark:mt-0 dark:text-slate-400 md:text-6xl">
             Approve Teacher
           </h2>
           <h3 className="text-2xl font-semibold">
-            Department: {user.department}
+            Department: {user.teacher.department}
           </h3>
           <form>
             {newTeachers.length ? (
@@ -73,7 +73,7 @@ const TeacherApproval = () => {
                       <th className="p-2 ">Name</th>
                       <th className="p-2 ">Email</th>
                       <th className="p-2 ">Qualification</th>
-                      <th className="p-2 ">Username</th>
+                      <th className="p-2 ">College Id</th>
                       <th className="p-2 ">Approve</th>
                       <th className="p-2 ">Reject</th>
                     </tr>
@@ -91,7 +91,7 @@ const TeacherApproval = () => {
                           {teacher.qualification}
                         </td>
                         <td className="border-t-[1px] border-slate-400 p-2">
-                          {teacher.username}
+                          {teacher.college_id}
                         </td>
                         <td className="border-t-[1px] border-slate-400 p-0">
                           <button

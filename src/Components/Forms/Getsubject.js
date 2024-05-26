@@ -15,7 +15,8 @@ const JoinPaper = () => {
   useEffect(() => {
     const getallPapers = async () => {
       try {
-        const response = await axios.get("paper/manage/" + user._id);
+        const response = await axios.get("paper/manage/" + user.teacher._id);
+        console.log(response.data);
         setPapers(response.data);
       } catch (err) {
         setError(err);
@@ -69,10 +70,10 @@ const JoinPaper = () => {
 
   return (
     <>
-      {user.role === "student" ? (
-        <main>
+      {/* {user.role === "student" ? ( */}
+   { user.userType === "HOD" ? (  <main>
           <h2 className="mb-2 mt-3 whitespace-break-spaces text-4xl font-bold text-violet-950 underline decoration-inherit decoration-2 underline-offset-4 dark:mt-0 dark:text-slate-400 md:text-6xl">
-            Manage Paper
+            Manage Subject
           </h2>
           <form>
             {papers.length ? (
@@ -82,7 +83,7 @@ const JoinPaper = () => {
                     <TableHeader
                       AdditionalRowClasses={"rounded-t-xl text-left"}
                       Headers={[
-                        "Paper",
+                        "Subjects",
                         "Department",
                         "Year",
                         "Semester",
@@ -94,7 +95,7 @@ const JoinPaper = () => {
                       {papers?.map((paper, index) => (
                         <tr key={index}>
                           <td className="border-t-[1px] border-slate-400 px-4 py-2">
-                            {paper.paper}
+                            {paper.subject}
                           </td>
                           <td className="border-t-[1px] border-slate-400 px-4 py-2">
                             {paper.department}

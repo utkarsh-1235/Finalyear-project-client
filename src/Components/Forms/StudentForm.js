@@ -10,8 +10,15 @@ const StudentForm = () => {
     name: "",
     email: "",
     course: "",
-    username: "",
-    password: "",
+    universityRollno: "",
+    phoneNumber: "",
+    collegeId: "",
+    mothersName: "",
+    mothersPhone: "",
+    fathersName: "",
+    fathersPhone: "",
+    guardianName: "",
+    guardianPhone: ""
   });
   const [error, setError] = useState("");
 
@@ -36,11 +43,12 @@ const StudentForm = () => {
 
   return (
     <form className="scrollWidth w-full  font-medium tracking-wide accent-violet-600">
+      <div className="w-1/2 h-full block  ml-20">
       <label className="block" htmlFor="name">
         Name:
       </label>
       <input
-        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+        className="mb-4 block h-10 w-full  rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
         type="text"
         required
         id="name"
@@ -69,28 +77,102 @@ const StudentForm = () => {
         value={student.course}
         onChange={(e) => handleFormChange(e)}
       />
-      <label className="block" htmlFor="username">
-        Username:
+      <label className="block" htmlFor="universityRollno">
+        University RollNo:
       </label>
       <input
         className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
         type="text"
-        id="username"
         required
-        value={student.username}
+        id="universityRollno"
+        value={student.universityRollno}
         onChange={(e) => handleFormChange(e)}
       />
-      <label className="block" htmlFor="password">
-        Password:
+      <label className="block" htmlFor="phoneNumber">
+        Phone No:
       </label>
       <input
         className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
-        type="password"
-        id="password"
-        value={student.password}
-        onChange={(e) => handleFormChange(e)}
+        type="text"
         required
+        id="phoneNumber"
+        value={student.phoneNumber}
+        onChange={(e) => handleFormChange(e)}
       />
+      <label className="block" htmlFor="collegeId">
+        College Id :
+      </label>
+      <input
+        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+        type="text"
+        required
+        id="collegeId"
+        value={student.collegeId}
+        onChange={(e) => handleFormChange(e)}
+      />
+      <label className="block" htmlFor="mothersName">
+        Mother's Name:
+      </label>
+      <input
+        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+        type="text"
+        id="mothersName"
+        value={student.mothersName}
+        onChange={(e) => handleFormChange(e)}
+      />
+      <label className="block" htmlFor="mothersPhone">
+        Mother's PhoneNumber:
+      </label>
+      <input
+        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+        type="text"
+        id="mothersPhone"
+        value={student.mothersPhone}
+        onChange={(e) => handleFormChange(e)}
+      />
+      <label className="block" htmlFor="fathersName">
+        Father's Name:
+      </label>
+      <input
+        className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+        type="text"
+        id="fathersName"
+        value={student.fathersName}
+        onChange={(e) => handleFormChange(e)}
+      />
+      <label className="block" htmlFor="fathersPhone">
+      Father's PhoneNumber:
+    </label>
+    <input
+      className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+      type="text"
+      required
+      id="fathersPhone"
+      value={student.fathersPhone}
+      onChange={(e) => handleFormChange(e)}
+    />
+    <label className="block" htmlFor="guardianName">
+    Guardian Name:
+  </label>
+  <input
+    className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+    type="text"
+    required
+    id="guardianName"
+    value={student.guardianName}
+    onChange={(e) => handleFormChange(e)}
+  />
+  <label className="block" htmlFor="guardianPhone">
+    Guardian PhoneNumber:
+</label>
+<input
+  className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-slate-400 p-1 pl-2 outline-none selection:border-slate-200 focus:border-violet-900 dark:border-slate-200 dark:caret-inherit dark:focus:border-violet-400 dark:active:border-violet-400"
+  type="text"
+  required
+  id="guardianPhone"
+  value={student.guardianPhone}
+  onChange={(e) => handleFormChange(e)}
+/>
       <button
         type="submit"
         className="mb-4 block h-10 w-full rounded-md border-[1.5px] border-solid border-violet-900 bg-slate-800 p-1 font-bold tracking-wide text-slate-200 hover:bg-violet-900 focus:bg-violet-900 dark:border-violet-300 dark:bg-violet-600 dark:text-slate-50 dark:hover:bg-slate-900 "
@@ -99,6 +181,7 @@ const StudentForm = () => {
         Register
       </button>
       {error ? <ErrorStrip error={error} /> : ""}
+      </div>
     </form>
   );
 };

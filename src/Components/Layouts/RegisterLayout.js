@@ -17,7 +17,7 @@ const RegisterLayout = () => {
       <section className="my-8 flex h-fit w-fit animate-fadeInFast flex-col justify-start gap-6 rounded-md bg-slate-100 p-4 text-slate-900 opacity-70 hover:opacity-100 focus:opacity-100 dark:bg-[#060913] dark:text-slate-50 md:p-8 lg:flex-row xl:w-1/2 ">
         <div className="flex flex-col-reverse justify-between lg:flex-col ">
           <h1 className="text-4xl font-semibold lg:text-5xl">
-            {location === "/register/reg_teacher" ? "Teacher" : "Student"}
+            {location === "/register/reg_teacher" }
             <br />
             Registration
           </h1>
@@ -26,9 +26,9 @@ const RegisterLayout = () => {
               <NavLink to={"./reg_teacher"}>
                 <PiUserThin className="rounded-full border-[1px] border-slate-900 p-[2px] font-light dark:border-slate-300 md:p-2" />
               </NavLink>
-              <NavLink to={"./reg_student"}>
+              {/* <NavLink to={"./reg_student"}>
                 <PiStudentThin className="rounded-full border-[1px] border-slate-900 p-[2px] font-light dark:border-slate-300 md:p-2" />
-              </NavLink>
+              </NavLink> */}
             </div>
             <Link
               className="flex items-center font-spectral text-xl font-semibold text-slate-900 dark:text-slate-50"
@@ -36,9 +36,9 @@ const RegisterLayout = () => {
             >
               <FaUniversity />
               <p className="decoration-violet-900 decoration-2 hover:underline dark:decoration-violet-300">
-                K
-                <span className=" inline-block h-3 w-3 rounded-full bg-violet-900 dark:bg-violet-500 "></span>
-                llege
+                IMS 
+                
+                EC
               </p>
             </Link>
           </div>
