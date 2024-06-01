@@ -3,7 +3,7 @@ import axios from "../../config/api/axios";
 import UserContext from "../../Hooks/UserContext";
 import ErrorStrip from "../ErrorStrip";
 import "./style.css";
-
+import { toast } from "react-toastify";
 
 // const InternalResultForm = () => {
 //   const { paperList } = useContext(UserContext);
@@ -295,6 +295,7 @@ import "./style.css";
 
 
 
+
 const Table = (props) => {
   const { data = [] } = props;
   const [state, setState] = useState(data);
@@ -306,6 +307,8 @@ const Table = (props) => {
   const [error, setError] = useState("");
   const [students, setStudents] = useState([]);
 
+  console.log(state);
+
   const getStudents = async (e) => {
     e.preventDefault();
     setStudents([]);
@@ -313,6 +316,7 @@ const Table = (props) => {
     try {
       const response = await axios.get("/paper/students/" + paper);
       setStudents(response.data);
+      setState(response.data);
       setDisabled(true);
       setError("");
     } catch (err) {
@@ -350,13 +354,93 @@ const Table = (props) => {
     }
   };
 
-  const handleChange = (value, rollNo, ques) => {
+  const addInternalMark = async (e) => {
+        e.preventDefault();
+        console.log(internal)
+        const formattedInternal = state.map((student) => {
+          return {
+            student: student.studentId, 
+            CO1: {
+              A1a: student.ques1A,
+              A1b: student.ques1B,
+              A1c: student.ques1C,
+              B2a: student.ques2A,
+              B2b: student.ques2B,
+              B2c: student.ques2C,
+              C3a: student.ques3A,
+              C3b: student.ques3B,
+              C5a: student.ques5A,
+            },
+            CO2: {
+              A1d: student.ques1D,
+              A1e: student.ques1E,
+              B2d: student.ques2D,
+              B2e: student.ques2E,
+              C4a: student.ques4A,
+              C4b: student.ques4B,
+              C5b: student.ques5B,
+            },
+            CO3: {
+              A1a: student.ques1A,
+              A1b: student.ques1B,
+              A1c: student.ques1C,
+              B2a: student.ques2A,
+              C3a: student.ques3A,
+              C3b: student.ques3B,
+            },
+            CO4: {
+              A1d: student.ques1D,
+              B2b: student.ques2B,
+              B2c: student.ques2C,
+              C4a: student.ques4A,
+              C4b: student.ques4B,
+            },
+            CO5: {
+              A1e: student.ques1E,
+              B2d: student.ques2D,
+              B2e: student.ques2E,
+              C5a: student.ques5A,
+              C5b: student.ques5B,
+            },
+            total: student.total,
+          };
+        });
+        console.log(formattedInternal)
+        const marks = { id, paper, marks: formattedInternal };
+        try {
+          // adding new internal mark record
+          const response = await axios.post("internal/" + paper, marks);
+          toast.success(response.data.message);
+          setDisabled(true);
+          setError("");
+          // fetchInternal(e);
+        } catch (err) {
+          setError(err);
+          toast.error(err);
+
+          // conflict, record already exists
+          // if (err.response.status === 409) {
+          //   try {
+          //     // updating internal record
+          //     const response = await axios.patch("internal/" + paper, marks);
+          //     toast.success(response.data.message);
+          //     setDisabled(true);
+          //     setError("");
+          //   } catch (err) {
+          //     setError(err);
+          //   }
+          // } else setError(err);
+        }
+      };
+
+  const handleChange = (value, universityRollno, ques) => {
+    console.log(value, universityRollno)
     setState((prev) => {
       const updatedData = prev.map((student) => {
-        if (student.rollNo === rollNo) {
+        if (student.universityRollno === universityRollno) {
           return {
             ...student,
-            [ques]: parseInt(value) ? parseInt(value) : null,
+            [ques]: parseInt(value) || 0,
           };
         }
         return student;
@@ -420,6 +504,13 @@ const Table = (props) => {
           >
             Fetch
           </button>
+
+          {students.length?(<button
+            className="mb-4 h-10 w-auto rounded-md border-[1.5px] border-solid border-violet-900 bg-slate-800 px-8 py-2 font-semibold tracking-wide text-slate-200 hover:bg-violet-900 focus:bg-violet-900 disabled:cursor-not-allowed dark:border-violet-300 dark:bg-violet-900 dark:text-violet-100 dark:hover:bg-slate-900"
+            type="submit" onClick={addInternalMark}
+          >
+            Calculate
+          </button>):("")}
         </form>
       </section>
       <div>{error ? <ErrorStrip error={error} /> : ""}</div>
@@ -544,8 +635,7 @@ const Table = (props) => {
 
               return (
               
-                <tr key={item.rollNo}>
-                  {console.log(item.rollNo)}
+                <tr key={item.universityRollno}>
                   <td className="text-center">{item.universityRollno}</td>
                   <td>{item.name}</td>
                   <td>
@@ -554,7 +644,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques1A"]}
                       value={ques1A}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques1A")
+                        handleChange(e.target.value, item.universityRollno, "ques1A")
                       }
                     />
                   </td>
@@ -564,7 +654,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques1B"]}
                       value={ques1B}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques1B")
+                        handleChange(e.target.value, item.universityRollno, "ques1B")
                       }
                     />
                   </td>
@@ -574,7 +664,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques1C"]}
                       value={ques1C}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques1C")
+                        handleChange(e.target.value, item.universityRollno, "ques1C")
                       }
                     />
                   </td>
@@ -584,7 +674,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques1D"]}
                       value={ques1D}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques1D")
+                        handleChange(e.target.value, item.universityRollno, "ques1D")
                       }
                     />
                   </td>
@@ -594,7 +684,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques1E"]}
                       value={ques1E}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques1E")
+                        handleChange(e.target.value, item.universityRollno, "ques1E")
                       }
                     />
                   </td>
@@ -604,7 +694,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques2A"]}
                       value={ques2A}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques2A")
+                        handleChange(e.target.value, item.universityRollno, "ques2A")
                       }
                     />
                   </td>
@@ -614,7 +704,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques2B"]}
                       value={ques2B}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques2B")
+                        handleChange(e.target.value, item.universityRollno, "ques2B")
                       }
                     />
                   </td>
@@ -624,7 +714,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques2C"]}
                       value={ques2C}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques2C")
+                        handleChange(e.target.value, item.universityRollno, "ques2C")
                       }
                     />
                   </td>
@@ -634,7 +724,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques2D"]}
                       value={ques2D}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques2D")
+                        handleChange(e.target.value, item.universityRollno, "ques2D")
                       }
                     />
                   </td>
@@ -644,7 +734,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques2E"]}
                       value={ques2E}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques2E")
+                        handleChange(e.target.value, item.universityRollno, "ques2E")
                       }
                     />
                   </td>
@@ -654,7 +744,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques3A"]}
                       value={ques3A}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques3A")
+                        handleChange(e.target.value, item.universityRollno, "ques3A")
                       }
                     />
                   </td>
@@ -664,7 +754,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques3B"]}
                       value={ques3B}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques3B")
+                        handleChange(e.target.value, item.universityRollno, "ques3B")
                       }
                     />
                   </td>
@@ -674,7 +764,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques4A"]}
                       value={ques4A}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques4A")
+                        handleChange(e.target.value, item.universityRollno, "ques4A")
                       }
                     />
                   </td>
@@ -684,7 +774,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques4B"]}
                       value={ques4B}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques4B")
+                        handleChange(e.target.value, item.universityRollno, "ques4B")
                       }
                     />
                   </td>
@@ -694,7 +784,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques5A"]}
                       value={ques5A}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques5A")
+                        handleChange(e.target.value, item.universityRollno, "ques5A")
                       }
                     />
                   </td>
@@ -704,7 +794,7 @@ const Table = (props) => {
                       max={attemptedMarks["ques5B"]}
                       value={ques5B}
                       onChange={(e) =>
-                        handleChange(e.target.value, item.rollNo, "ques5B")
+                        handleChange(e.target.value, item.universityRollno, "ques5B")
                       }
                     />
                   </td>
@@ -720,4 +810,3 @@ const Table = (props) => {
 };
 
 export default Table;
-
