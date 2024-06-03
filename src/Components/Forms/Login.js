@@ -58,13 +58,19 @@ const Login = () => {
     }
   };
 
+  console.log(user, '......State');
+
   useEffect(() => {
+    console.log('userDetails1',JSON.parse(localStorage.getItem("userDetails")))
+
     if ("userDetails" in localStorage) {
+      console.log('userDetails2',JSON.parse(localStorage.getItem("userDetails")))
       setUser(JSON.parse(localStorage.getItem("userDetails")));
+      // navigate('/dash')
     }
     setUserType("");
     setMessage("");
-  }, [setUserType, setMessage, setUser]);
+  }, []);
 
   return (
     <>
