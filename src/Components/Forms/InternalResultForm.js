@@ -29,7 +29,7 @@ const Table = (props) => {
       /** Internal Marks Fetch & Initialize logic */
      // Call API /inteuniversityRollnornal/:paperId to get the internal marks data
           const internalMarksData = await axios.get("/internal/" + paper);
-          console.log(internalMarksData.data)
+   
         // Update state with the fetched data
         setStudents((prev) => {
           if (!Array.isArray(internalMarksData.data)) {
@@ -77,87 +77,87 @@ const Table = (props) => {
     }
   };
 
-  const fetchInternal = async (e) => {
-    setInternal([]);
-    setError("");
-    e.preventDefault();
-    try {
-      const response = await axios.get("/internal/" + paper);
-      console.log(response.data)
-      setId(response.data._id); // Set the ID of the internal record
-      setInternal(response.data.marks); // Set the marks data
-      setDisabled(true); // Disable further edits if data is found
-      setError("");
-    } catch (err) {
-      setError(err.message);
-      if (err.response && err.response.status === 404) {
-        try {
-          const response = await axios.get("/paper/" + paper);
-          const students = response.data.students;
+  // const fetchInternal = async (e) => {
+  //   setInternal([]);
+  //   setError("");
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.get("/internal/" + paper);
+  //     console.log(response.data)
+  //     setId(response.data._id); // Set the ID of the internal record
+  //     setInternal(response.data.marks); // Set the marks data
+  //     setDisabled(true); // Disable further edits if data is found
+  //     setError("");
+  //   } catch (err) {
+  //     setError(err.message);
+  //     if (err.response && err.response.status === 404) {
+  //       try {
+  //         const response = await axios.get("/paper/" + paper);
+  //         const students = response.data.students;
           
-          // Initialize each student object with default mark structure
-          const initializedStudents = students.map((student) => ({
-            ...student,
-            marks: {
-              CO1: {
-                A1a: '',
-                A1b: '',
-                A1c: '',
-                B2a: '',
-                B2b: '',
-                B2c: '',
-                C3a: '',
-                C3b: '',
-                C5a: '',
-              },
-              CO2: {
-                A1d: '',
-                A1e: '',
-                B2d: '',
-                B2e: '',
-                C4a: '',
-                C4b: '',
-                C5b: '',
-              },
-              CO3: {
-                A1a: '',
-                A1b: '',
-                A1c: '',
-                B2a: '',
-                C3a: '',
-                C3b: '',
-              },
-              CO4: {
-                A1d: '',
-                B2b: '',
-                B2c: '',
-                C4a: '',
-                C4b: '',
-              },
-              CO5: {
-                A1e: '',
-                B2d: '',
-                B2e: '',
-                C5a: '',
-                C5b: '',
-              },
-            },
-           total: student.total,
-          }));
+  //         // Initialize each student object with default mark structure
+  //         const initializedStudents = students.map((student) => ({
+  //           ...student,
+  //           marks: {
+  //             CO1: {
+  //               A1a: '',
+  //               A1b: '',
+  //               A1c: '',
+  //               B2a: '',
+  //               B2b: '',
+  //               B2c: '',
+  //               C3a: '',
+  //               C3b: '',
+  //               C5a: '',
+  //             },
+  //             CO2: {
+  //               A1d: '',
+  //               A1e: '',
+  //               B2d: '',
+  //               B2e: '',
+  //               C4a: '',
+  //               C4b: '',
+  //               C5b: '',
+  //             },
+  //             CO3: {
+  //               A1a: '',
+  //               A1b: '',
+  //               A1c: '',
+  //               B2a: '',
+  //               C3a: '',
+  //               C3b: '',
+  //             },
+  //             CO4: {
+  //               A1d: '',
+  //               B2b: '',
+  //               B2c: '',
+  //               C4a: '',
+  //               C4b: '',
+  //             },
+  //             CO5: {
+  //               A1e: '',
+  //               B2d: '',
+  //               B2e: '',
+  //               C5a: '',
+  //               C5b: '',
+  //             },
+  //           },
+  //          total: student.total,
+  //         }));
           
-          setInternal(initializedStudents);
-          setDisabled(false); // Enable edits if data is not found
-        } catch (err) {
-          setError("Error fetching paper data: " + err.message);
-        }
-      }
-    }
-  };
+  //         setInternal(initializedStudents);
+  //         setDisabled(false); // Enable edits if data is not found
+  //       } catch (err) {
+  //         setError("Error fetching paper data: " + err.message);
+  //       }
+  //     }
+  //   }
+  // };
   
   
   const addInternalMark = async (e) => {
         e.preventDefault();
-        console.log(internal)
+        console.log(students)
         const formattedInternal = students.map((student) => {
           return {
             universityRollno: student.universityRollno,
@@ -203,6 +203,17 @@ const Table = (props) => {
               C5a: student.ques5A,
               C5b: student.ques5B,
             },
+            CO1Attempt: {},
+            CO1Marks: {},
+            CO2Attempt: {},
+            CO2Marks: {},
+            CO3Attempt: {},
+            CO3Marks: {},
+            CO4Attempt: {},
+            CO4Marks: {},
+            CO5Attempt: {},
+            CO5Marks: {},
+            Attainment: {}
           };
         });
        
@@ -213,7 +224,7 @@ const Table = (props) => {
           toast.success(response.data.message);
           setDisabled(true);
           setError("");
-           fetchInternal(e);
+          //  fetchInternal(e);
         } catch (err) {
           // conflict, record already exists
           if (err.response.status === 409) {
@@ -281,8 +292,9 @@ const Table = (props) => {
           { students.length?(<button
             className="mb-4 h-10 w-auto rounded-md border-[1.5px] border-solid border-violet-900 bg-slate-800 px-8 py-2 font-semibold tracking-wide text-slate-200 hover:bg-violet-900 focus:bg-violet-900 disabled:cursor-not-allowed dark:border-violet-300 dark:bg-violet-900 dark:text-violet-100 dark:hover:bg-slate-900"
             type="submit"
-             onClick={()=>{  }}
+      
           >
+     
            {ct1 ? ( <span onClick={()=>{setCt1(false); setCt2(true)}}>CT2</span>):(<span onClick={()=>{setCt2(false); setCt1(true)}}>CT1</span>)}
           </button>):("")}  
           
@@ -290,7 +302,10 @@ const Table = (props) => {
         </form>
       </section>
       <div>{error ? <ErrorStrip error={error} /> : ""}</div>
-     <MarkSheet students={students} handleChange={handleChange} isCtOne={ct1} />
+     
+     {ct1 ? (<MarkSheet students={students} handleChange={handleChange} isCtOne={ct1} />):(<MarkSheet students={students} handleChange={handleChange} />)}
+     
+     
     
      {students.length?(<button
             className="mb-4 h-10 w-auto rounded-md border-[1.5px] border-solid border-violet-900 bg-slate-800 px-8 py-2 font-semibold tracking-wide text-slate-200 hover:bg-violet-900 focus:bg-violet-900 disabled:cursor-not-allowed dark:border-violet-300 dark:bg-violet-900 dark:text-violet-100 dark:hover:bg-slate-900"

@@ -52,8 +52,6 @@ const MarkSheet = (props) => {
                   <th rowSpan="4">CO1 Marks Obt.</th>
                   <th rowSpan="4">CO2 attempt</th>
                   <th rowSpan="4">CO2 Marks Obt.</th>
-                  <th rowSpan="4">CO3 attempt</th>
-                  <th rowSpan="4">CO3 Marks Obt.</th>
                   <th rowSpan="4">Attainment</th>
                   </>)
                    : (<><th rowSpan="4">TOTAL MARKS (60)</th>
@@ -103,7 +101,7 @@ const MarkSheet = (props) => {
                   <th scope="col">CO2</th>
                   <th scope="col">CO1</th>
                   <th scope="col">CO1</th>
-                  <th scope="col">CO3</th>
+                  <th scope="col">CO1</th>
                   <th scope="col">CO2</th>
                   <th scope="col">CO2</th>
                   <th scope="col">CO1</th>
@@ -150,7 +148,7 @@ const MarkSheet = (props) => {
                     ques4A,
                     ques4B,
                     ques5A,
-                    ques5B,
+                    ques5B
                   } = item;
     
                   const totalMarks =
@@ -217,11 +215,47 @@ const MarkSheet = (props) => {
                                         (ques4B || 0) +
                                         (ques5B || 0)
 
-                        CO3Attempt = ques2C ? 5 : 0
-
-                        CO3Marks = (ques2C || 0)  
+                      
                     } else {
                         // Need to write logic for CT2
+
+                        CO3Attempt = (ques1A ? 2 : 0) + 
+                                     (ques1B ? 2 : 0) +
+                                     (ques1C ? 2 : 0) + 
+                                     (ques2A ? 5 : 0) +
+                                     (ques3A ? 10 : 0) +
+                                     (ques3B ? 10 : 0)
+                                     
+                         CO3Marks = (ques1A || 0) +
+                                    (ques1B || 0) +
+                                    (ques1C || 0) +
+                                    (ques2A || 0) +
+                                    (ques3A || 0) +
+                                    (ques3B || 0)
+
+                         CO4Attempt = (ques1D ? 2 : 0) +
+                                     (ques2B? 5 : 0) +
+                                     (ques2C? 5 : 0) +
+                                     (ques4A ? 10 : 0) +
+                                     (ques4B ? 10 : 0)
+
+                         CO4Marks = (ques1D || 0) +
+                                    (ques2B || 0) +
+                                    (ques2C || 0) +
+                                    (ques4A || 0) +
+                                    (ques4B || 0)
+                         
+                         CO5Attempt = (ques1E ? 2 : 0) +
+                                    (ques2D ? 5 : 0) +
+                                    (ques2E ? 5 : 0) +
+                                    (ques5A ? 10 : 0) +
+                                    (ques5B ? 10 : 0)
+
+                         CO5Marks = (ques1E || 0) +
+                                    (ques2D || 0) +
+                                    (ques2E || 0) +
+                                    (ques5A || 0) +
+                                    (ques5B || 0)
                     }               
     
                   return (
