@@ -76,7 +76,7 @@ const Table = (props) => {
       setError(err.message);
     }
   };
-
+   console.log(students);
   // const fetchInternal = async (e) => {
   //   setInternal([]);
   //   setError("");
@@ -157,8 +157,10 @@ const Table = (props) => {
   
   const addInternalMark = async (e) => {
         e.preventDefault();
+         
         console.log(students)
         const formattedInternal = students.map((student) => {
+      
           return {
             universityRollno: student.universityRollno,
             CO1: {
@@ -203,18 +205,19 @@ const Table = (props) => {
               C5a: student.ques5A,
               C5b: student.ques5B,
             },
-            CO1Attempt: {},
-            CO1Marks: {},
-            CO2Attempt: {},
-            CO2Marks: {},
-            CO3Attempt: {},
-            CO3Marks: {},
-            CO4Attempt: {},
-            CO4Marks: {},
-            CO5Attempt: {},
-            CO5Marks: {},
-            Attainment: {}
+            CO1Attempt: student.CO1Attempt || {},
+            CO1Marks: student.CO1Marks || {},
+            CO2Attempt: student.CO2Attempt || {},
+            CO2Marks: student.CO2Marks || {},
+            CO3Attempt: student.CO3Attempt || {},
+            CO3Marks: student.CO3Marks || {},
+            CO4Attempt: student.CO4Attempt || {},
+            CO4Marks: student.CO4Marks || {},
+            CO5Attempt: student.CO5Attempt || {},
+            CO5Marks: student.CO5Marks || {},
+            Attainment: student.Attainment || {}
           };
+          
         });
        
         const marks = { id, paper, marks: formattedInternal };
@@ -242,7 +245,7 @@ const Table = (props) => {
       };
 
   const handleChange = (value, universityRollno, ques) => {
-    console.log(value, universityRollno)
+    console.log(value, universityRollno, ques)
     setStudents((prev) => {
       const updatedData = prev.map((student) => {
         if (student.universityRollno === universityRollno) {

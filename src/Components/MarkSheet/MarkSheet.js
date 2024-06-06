@@ -182,19 +182,21 @@ const MarkSheet = (props) => {
                     let CO5Marks = null;
                     if (isCtOne) {
                         CO1Attempt = (ques1A ? 2 : 0) +
-                        (ques1B ? 2 : 0) +
-                        (ques1C ? 2 : 0) +
-                        (ques2A ? 5 : 0) +
-                        (ques2B ? 2 : 0) +
-                        (ques3A ? 10 : 0) +
-                        (ques3B ? 10 : 0) +
-                        (ques5A ? 10 : 0)
+                                     (ques1B ? 2 : 0) +
+                                     (ques1C ? 2 : 0) +
+                                     (ques2A ? 5 : 0) +
+                                     (ques2B ? 5 : 0) +
+                                     (ques2C ? 5 : 0) +
+                                     (ques3A ? 10 : 0) +
+                                     (ques3B ? 10 : 0) +
+                                     (ques5A ? 10 : 0)
 
                         CO1Marks = (ques1A || 0) +
                                         (ques1B || 0) +
                                         (ques1C || 0) +                 
                                         (ques2A || 0) +
                                         (ques2B || 0) +
+                                        (ques2C || 0) +
                                         (ques3A || 0) +
                                         (ques3B || 0) +
                                         (ques5A || 0)
@@ -423,18 +425,29 @@ const MarkSheet = (props) => {
                           }
                         />
                       </td>
-                      <td>{totalMarks}</td>
-                      {isCtOne ? (<><td>{CO1Attempt}</td>
-                      <td>{CO1Marks}</td>
-                      <td>{CO2Attempt}</td>
-                      <td>{CO2Marks}</td>
-                      <td>{CO3Attempt}</td>
-                      <td>{CO3Marks}</td></>) : (<><td>{CO3Attempt}</td>
-                      <td>{CO3Marks}</td>
-                      <td>{CO4Attempt}</td>
-                      <td>{CO4Marks}</td>
-                      <td>{CO5Attempt}</td>
-                      <td>{CO5Marks}</td></>)}
+                      <td >{totalMarks}</td>
+                      {isCtOne ? (<>
+                      <td >{CO1Attempt}</td>
+
+                      <td >{CO1Marks}</td>
+
+                      <td >{CO2Attempt}</td>
+
+                      <td >{CO2Marks}</td>
+
+                      </>) : (<>
+                        <td >{CO3Attempt}</td>
+
+                      <td >{CO3Marks}</td>
+                     
+                     <td >{CO4Attempt}</td>
+
+                      <td >{CO4Marks}</td>
+
+                      <td >{CO5Attempt}</td>
+
+                      <td >{CO5Marks}</td></>)}
+
                     
                       <td></td>
                     </tr>
